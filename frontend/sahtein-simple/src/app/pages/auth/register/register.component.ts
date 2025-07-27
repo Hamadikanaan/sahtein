@@ -23,7 +23,7 @@ import { AuthService } from '../../../services/auth.service';
               name="name" 
               required 
               class="form-control"
-              placeholder="أحمد محمد"
+              placeholder=" "
             >
           </div>
           

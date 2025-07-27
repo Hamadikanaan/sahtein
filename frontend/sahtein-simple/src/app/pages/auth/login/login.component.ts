@@ -23,7 +23,7 @@ import { AuthService } from '../../../services/auth.service';
               name="email" 
               required 
               class="form-control"
-              placeholder="test@sahtein.com"
+              placeholder=" Your mail"
             >
           </div>
           
@@ -35,7 +35,7 @@ import { AuthService } from '../../../services/auth.service';
               name="password" 
               required 
               class="form-control"
-              placeholder="password123"
+              placeholder="password"
             >
           </div>
           
@@ -143,7 +143,7 @@ import { AuthService } from '../../../services/auth.service';
   `]
 })
 export class LoginComponent {
-  credentials = { email: 'test@sahtein.com', password: 'password123' };
+  credentials = { email: '', password: '' };
   loading = false;
   error = '';
 

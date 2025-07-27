@@ -1,0 +1,27 @@
+/* Global Styles - Weiß & Grün Design */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: #ffffff;
+  min-height: 100vh;
+  direction: rtl;
+  color: #333;
+}
+
+html, body {
+  height: 100%;
+}
+
+/* Grün-Palette */
+:root {
+  --primary-green: #2d8a3e;
+  --light-green: #4caf50;
+  --dark-green: #1b5e20;
+  --success-green: #27ae60;
+  --accent-green: #81c784;
+}

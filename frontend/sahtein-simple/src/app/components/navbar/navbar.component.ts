@@ -34,8 +34,8 @@ import { CartService } from '../../services/cart.service';
           
           <!-- Restaurant Links (when logged in as restaurant) -->
           <ng-container *ngIf="isRestaurantLoggedIn()">
-            <a routerLink="/restaurant-dashboard" class="nav-link">لوحة التحكم</a>
-            <a routerLink="/restaurant-orders" class="nav-link">الطلبات</a>
+            <a routerLink="/user/restaurant-management" class="nav-link">لوحة التحكم</a>
+            <a routerLink="/user/restaurant-orders" class="nav-link">الطلبات</a>
             <button (click)="logout()" class="nav-link logout-btn">خروج</button>
           </ng-container>
           
@@ -124,18 +124,18 @@ import { CartService } from '../../services/cart.service';
           <ng-container *ngIf="isRestaurantLoggedIn()">
             <div class="menu-section">
               <div class="section-title">إدارة المطعم</div>
-              <a routerLink="/restaurant-dashboard" (click)="closeMobileMenu()" class="mobile-link">
-                <span class="link-icon">📊</span>
-                لوحة التحكم
-              </a>
-              <a routerLink="/restaurant-orders" (click)="closeMobileMenu()" class="mobile-link">
-                <span class="link-icon">📋</span>
-                الطلبات
-              </a>
-              <a routerLink="/restaurant-menu" (click)="closeMobileMenu()" class="mobile-link">
-                <span class="link-icon">🍽️</span>
-                إدارة القائمة
-              </a>
+              <a routerLink="/user/restaurant-management" (click)="closeMobileMenu()" class="mobile-link">
+              <span class="link-icon">📊</span>
+              لوحة التحكم
+            </a>
+            <a routerLink="/user/restaurant-orders" (click)="closeMobileMenu()" class="mobile-link">
+              <span class="link-icon">📋</span>
+              الطلبات
+            </a>
+            <a routerLink="/user/menu-management" (click)="closeMobileMenu()" class="mobile-link">
+              <span class="link-icon">🍽️</span>
+              إدارة القائمة
+            </a>
             </div>
             
             <div class="menu-section">
@@ -537,11 +537,26 @@ export class NavbarComponent implements OnInit {
       this.cartCount = this.cartService.getItemCount();
     });
 
-    // User type detection - will be enhanced with real auth
+    // User type detection - FIXED
     this.authService.currentUser$.subscribe(user => {
       if (user) {
-        // TODO: Get user type from backend
-        this.userType = 'customer'; // Default for now
+        // Direkt aus localStorage lesen
+        const userTypeFromStorage = localStorage.getItem('user_type');
+        console.log('User type from storage:', userTypeFromStorage);
+        console.log('User object:', user);
+        
+        if (userTypeFromStorage === 'admin') {
+          // Prüfe ob es ein Restaurant-Admin ist
+          if ('role' in user && (user as any).role === 'restaurant_admin') {
+            this.userType = 'restaurant';
+          } else {
+            this.userType = 'admin';
+          }
+        } else {
+          this.userType = 'customer';
+        }
+        
+        console.log('Final userType set to:', this.userType);
       } else {
         this.userType = null;
       }

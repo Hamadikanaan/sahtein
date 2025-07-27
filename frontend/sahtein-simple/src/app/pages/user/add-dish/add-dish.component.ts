@@ -1,10 +1,11 @@
 // app/pages/user/add-dish/add-dish.component.ts
-import { Component, OnInit } from '@angular/core';
+ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { AuthService } from '../../../services/auth.service';
+
 
 @Component({
   selector: 'app-add-dish',
@@ -232,7 +233,8 @@ import { AuthService } from '../../../services/auth.service';
               <div class="image-preview" *ngIf="newDish.image_preview">
                 <img [src]="newDish.image_preview" alt="معاينة الطبق">
                 <div class="image-actions">
-                  <button type="button" class="change-image-btn" (click)="fileInput.click()">
+                  <button type="button" class="change-image-btn" (click)="fileInput.nativeElement.click()">
+
                     تغيير الصورة
                   </button>
                   <button type="button" class="remove-image-btn" (click)="removeImage()">
@@ -847,6 +849,7 @@ import { AuthService } from '../../../services/auth.service';
   `]
 })
 export class AddDishComponent implements OnInit {
+    @ViewChild('fileInput') fileInput!: ElementRef;
   restaurant: any = null;
   loading = false;
   saving = false;

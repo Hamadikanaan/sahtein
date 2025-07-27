@@ -1,11 +1,9 @@
-// app/interceptors/auth.interceptor.ts
+// app/interceptors/auth.interceptor.ts - FIXED
 import { HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
-  const token = authService.getToken();
+  // DIREKT aus localStorage lesen - KEINE AuthService Dependency!
+  const token = localStorage.getItem('access_token');
 
   if (token) {
     const authReq = req.clone({

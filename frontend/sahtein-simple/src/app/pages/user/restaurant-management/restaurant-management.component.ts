@@ -65,7 +65,7 @@ import { AuthService } from '../../../services/auth.service';
             <p>إضافة وتعديل وحذف الأطباق، تنظيم القائمة حسب الفئات</p>
             <div class="card-stats">
               <span>{{ stats?.active_dishes || 0 }} طبق نشط</span>
-              <span>{{ categories?.length || 4 }} فئة</span>
+              <span>{{ categories.length || 4 }} فئة</span>
             </div>
           </div>
           <button class="card-button" (click)="manageMenu()">

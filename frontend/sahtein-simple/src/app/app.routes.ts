@@ -56,6 +56,7 @@ export const routes: Routes = [
     path: 'user', 
     canActivate: [AuthGuard],
     children: [
+      { path: '', redirectTo: 'profile', pathMatch: 'full' }, // ← NEU
       { path: 'profile', component: UserProfileComponent },
       { path: 'restaurant-management', component: RestaurantManagementComponent },
       { path: 'menu-management', component: MenuManagementComponent },

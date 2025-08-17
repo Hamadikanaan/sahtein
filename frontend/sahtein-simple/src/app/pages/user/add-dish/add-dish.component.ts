@@ -941,14 +941,25 @@ export class AddDishComponent implements OnInit {
       return;
     }
 
-    this.apiService.getUserRestaurant(user.id).subscribe({
-      next: (response) => {
-        this.restaurant = response.restaurant;
-      },
-      error: (err) => {
-        console.error('Error loading restaurant:', err);
+    // Get restaurant ID from JWT token
+    const token = this.authService.getToken();
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        console.log('JWT payload:', payload);
+        
+        if (payload.restaurant_id) {
+          this.restaurant = { 
+            id: payload.restaurant_id, 
+            name_ar: 'مطعمي' 
+          };
+          console.log('Restaurant loaded:', this.restaurant);
+          return;
+        }
+      } catch (e) {
+        console.error('Error parsing JWT:', e);
       }
-    });
+    }
   }
 
   checkQueryParams() {
@@ -985,6 +996,18 @@ export class AddDishComponent implements OnInit {
   handleImageUpload(event: any) {
     const file = event.target.files[0];
     if (file) {
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        this.showNotification('حجم الصورة كبير جداً (الحد الأقصى 5 ميجابايت)');
+        return;
+      }
+      
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        this.showNotification('يرجى اختيار صورة صحيحة');
+        return;
+      }
+      
       this.newDish.image_file = file;
       
       const reader = new FileReader();
@@ -992,6 +1015,8 @@ export class AddDishComponent implements OnInit {
         this.newDish.image_preview = e.target?.result as string;
       };
       reader.readAsDataURL(file);
+      
+      console.log('Image uploaded:', file.name, file.size);
     }
   }
 
@@ -1008,8 +1033,12 @@ export class AddDishComponent implements OnInit {
     const dishData = {
       ...this.newDish,
       restaurant_id: this.restaurant.id,
-      special_options: this.newDish.specialOptions
+      special_options: this.newDish.specialOptions,
+      // Temporarily store image as base64 in photo_url
+      photo_url: this.newDish.image_preview || ''
     };
+    
+    console.log('Saving dish with photo:', dishData.photo_url ? 'Yes' : 'No');
     
     this.apiService.createDish(dishData).subscribe({
       next: (response) => {

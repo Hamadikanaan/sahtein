@@ -88,9 +88,19 @@ import { AuthService } from '../../../services/auth.service';
             [class.unavailable]="!dish.is_available"
           >
             <div class="dish-image">
-              <div class="image-placeholder">
+              <!-- Show real image if available -->
+              <img 
+                *ngIf="dish.photo_url && dish.photo_url.length > 50" 
+                [src]="dish.photo_url" 
+                [alt]="dish.name_ar"
+                class="dish-photo"
+              >
+              <!-- Show emoji placeholder if no image -->
+              <div *ngIf="!dish.photo_url || dish.photo_url.length <= 50" class="image-placeholder">
                 <span class="dish-emoji">{{ getDishEmoji(dish.category) }}</span>
               </div>
+              ...
+            
               <div class="dish-actions">
                 <button class="action-btn edit" (click)="editDish(dish)">✏️</button>
                 <button 
@@ -583,6 +593,27 @@ import { AuthService } from '../../../services/auth.service';
       transform: translateY(-2px);
     }
 
+
+    .dish-image {
+      height: 160px;
+      background: linear-gradient(135deg, #2d8a3e, #4caf50);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dish-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+    }
+
+    .image-placeholder {
+      text-align: center;
+    }
+
     /* Bulk Actions */
     .bulk-actions {
       position: fixed;
@@ -714,6 +745,7 @@ export class MenuManagementComponent implements OnInit {
     this.loadMenuData();
   }
 
+
   loadMenuData() {
     const user = this.authService.getCurrentUser();
     if (!user) {
@@ -721,19 +753,28 @@ export class MenuManagementComponent implements OnInit {
       return;
     }
 
-    // Load restaurant and dishes
-    this.apiService.getUserRestaurant(user.id).subscribe({
-      next: (response) => {
-        this.restaurant = response.restaurant;
-        if (this.restaurant) {
-          this.loadDishes();
+    // Get restaurant ID from JWT token
+    const token = this.authService.getToken();
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        console.log('JWT payload:', payload);
+        
+        if (payload.restaurant_id) {
+          this.restaurant = { 
+            id: payload.restaurant_id, 
+            name_ar: 'مطعمي' 
+          };
+          console.log('Restaurant loaded:', this.restaurant);
+          this.loadDishes(); // ✅ Jetzt Gerichte laden
+          return;
         }
-      },
-      error: (err) => {
-        console.error('Error loading restaurant:', err);
-        this.loading = false;
+      } catch (e) {
+        console.error('Error parsing JWT:', e);
       }
-    });
+    }
+    
+    this.loading = false;
   }
 
   loadDishes() {

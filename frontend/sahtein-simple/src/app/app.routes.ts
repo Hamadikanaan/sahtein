@@ -11,6 +11,7 @@ import { RestaurantsComponent } from './pages/restaurants/restaurants.component'
 import { RestaurantDetailComponent } from './pages/restaurant-detail/restaurant-detail.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { FavoritesComponent } from './pages/favorites/favorites.component'; // ✅ NEU
 
 import { AuthGuard } from './guards/auth.guard';
 import { AdminPanelComponent } from './pages/admin/admin-panel/admin-panel.component';
@@ -46,6 +47,8 @@ export const routes: Routes = [
   { path: 'restaurant/:id', component: RestaurantDetailComponent },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+
+  { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] },
   
   // Profile Routes - ERWEITERT!
   { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard] },

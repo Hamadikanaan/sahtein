@@ -538,22 +538,16 @@ export class NavbarComponent implements OnInit {
     });
 
     // User type detection - FIXED
+        // User type detection - SIMPLIFIED
     this.authService.currentUser$.subscribe(user => {
       if (user) {
-        // Direkt aus localStorage lesen
         const userTypeFromStorage = localStorage.getItem('user_type');
         console.log('User type from storage:', userTypeFromStorage);
-        console.log('User object:', user);
         
-        if (userTypeFromStorage === 'admin') {
-          // Prüfe ob es ein Restaurant-Admin ist
-          if ('role' in user && (user as any).role === 'restaurant_admin') {
-            this.userType = 'restaurant';
-          } else {
-            this.userType = 'admin';
-          }
-        } else {
+        if (userTypeFromStorage === 'customer') {
           this.userType = 'customer';
+        } else {
+          this.userType = 'restaurant'; // Alle anderen als Restaurant
         }
         
         console.log('Final userType set to:', this.userType);

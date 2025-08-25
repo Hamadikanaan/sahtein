@@ -9,11 +9,37 @@ import { HttpClient } from '@angular/common/http';
   selector: 'app-restaurant-register',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
+  styleUrls: ['./restaurant-register.component.css'],
   template: `
     <div class="register-container">
+      <!-- Animated Background -->
+      <div class="bg-gradient"></div>
+      <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+      </div>
+      
+      <!-- Floating Restaurant Icons -->
+      <div class="floating-icons">
+        <span class="float-icon icon-1">🏪</span>
+        <span class="float-icon icon-2">📋</span>
+        <span class="float-icon icon-3">👨‍🍳</span>
+        <span class="float-icon icon-4">📊</span>
+        <span class="float-icon icon-5">🍽️</span>
+        <span class="float-icon icon-6">💼</span>
+      </div>
+
       <div class="register-card">
+        <div class="card-glow"></div>
+        
         <div class="header">
-          <h1>🏪 تسجيل مطعم جديد</h1>
+          <div class="header-icon">
+            <span class="main-icon">🏪</span>
+            <div class="icon-pulse"></div>
+          </div>
+          <h1>تسجيل مطعم جديد</h1>
           <p>قدم طلب لإضافة مطعمك إلى منصة صحتين</p>
         </div>
 
@@ -21,7 +47,10 @@ import { HttpClient } from '@angular/common/http';
           
           <!-- Login Information -->
           <div class="form-section">
-            <h3>معلومات تسجيل الدخول</h3>
+            <h3>
+              <span class="section-icon">🔐</span>
+              معلومات تسجيل الدخول
+            </h3>
             <div class="form-row">
               <div class="form-group">
                 <label>اسم المستخدم *</label>
@@ -51,7 +80,10 @@ import { HttpClient } from '@angular/common/http';
 
           <!-- Restaurant Information -->
           <div class="form-section">
-            <h3>معلومات المطعم</h3>
+            <h3>
+              <span class="section-icon">🏪</span>
+              معلومات المطعم
+            </h3>
             <div class="form-row">
               <div class="form-group">
                 <label>اسم المطعم (عربي) *</label>
@@ -157,7 +189,10 @@ import { HttpClient } from '@angular/common/http';
 
           <!-- Location Information -->
           <div class="form-section">
-            <h3>معلومات الموقع</h3>
+            <h3>
+              <span class="section-icon">📍</span>
+              معلومات الموقع
+            </h3>
             <div class="form-row">
               <div class="form-group full-width">
                 <label>العنوان التفصيلي *</label>
@@ -200,7 +235,10 @@ import { HttpClient } from '@angular/common/http';
 
           <!-- Owner Information -->
           <div class="form-section">
-            <h3>معلومات صاحب المطعم</h3>
+            <h3>
+              <span class="section-icon">👨‍💼</span>
+              معلومات صاحب المطعم
+            </h3>
             <div class="form-row">
               <div class="form-group">
                 <label>الاسم الكامل *</label>
@@ -243,7 +281,10 @@ import { HttpClient } from '@angular/common/http';
 
           <!-- Documents Section -->
           <div class="form-section">
-            <h3>الوثائق المطلوبة</h3>
+            <h3>
+              <span class="section-icon">📄</span>
+              الوثائق المطلوبة
+            </h3>
             <div class="documents-info">
               <div class="document-item">
                 <span class="doc-icon">📋</span>
@@ -288,8 +329,14 @@ import { HttpClient } from '@angular/common/http';
               class="submit-btn"
               [disabled]="!restaurantForm.valid || isSubmitting"
             >
-              <span *ngIf="!isSubmitting">تقديم طلب التسجيل</span>
-              <span *ngIf="isSubmitting">جارٍ الإرسال...</span>
+              <span class="btn-content" [class.loading]="isSubmitting">
+                <svg *ngIf="isSubmitting" class="loading-spinner" width="20" height="20" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.25"/>
+                  <path d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"/>
+                </svg>
+                <span>{{ isSubmitting ? 'جار الإرسال...' : 'تقديم طلب التسجيل' }}</span>
+              </span>
+              <div class="btn-shine"></div>
             </button>
           </div>
 
@@ -310,6 +357,7 @@ import { HttpClient } from '@angular/common/http';
             <div class="error-icon">❌</div>
             <h4>حدث خطأ!</h4>
             <p>{{ errorMessage }}</p>
+            <button class="error-close" (click)="showError = false">&times;</button>
           </div>
 
         </form>
@@ -317,312 +365,11 @@ import { HttpClient } from '@angular/common/http';
         <!-- Login Link -->
         <div class="login-link">
           <p>لديك حساب مطعم؟ <a routerLink="/restaurant-login">تسجيل دخول</a></p>
-          <p>عميل؟ <a routerLink="/login">دخول العملاء</a></p>
+          <p>عميل؟ <a routerLink="/login-select">دخول العملاء</a></p>
         </div>
       </div>
     </div>
-  `,
-  styles: [`
-    .register-container {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #2d8a3e, #4caf50);
-      padding: 2rem 1rem;
-      direction: rtl;
-    }
-    
-    .register-card {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-      overflow: hidden;
-    }
-    
-    .header {
-      background: linear-gradient(135deg, #2d8a3e, #4caf50);
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
-    
-    .header h1 {
-      margin: 0 0 0.5rem 0;
-      font-size: 2rem;
-    }
-    
-    .header p {
-      margin: 0;
-      opacity: 0.9;
-      font-size: 1.1rem;
-    }
-    
-    .register-form {
-      padding: 2rem;
-    }
-    
-    .form-section {
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .form-section:last-of-type {
-      border-bottom: none;
-    }
-    
-    .form-section h3 {
-      color: #2d8a3e;
-      margin-bottom: 1.5rem;
-      font-size: 1.3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    
-    .form-group {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .form-group.full-width {
-      grid-column: 1 / -1;
-    }
-    
-    .form-group label {
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #333;
-    }
-    
-    .form-control {
-      padding: 0.8rem;
-      border: 2px solid #e8f5e8;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
-      direction: rtl;
-    }
-    
-    .form-control:focus {
-      outline: none;
-      border-color: #2d8a3e;
-    }
-    
-    .form-control:invalid {
-      border-color: #ff4757;
-    }
-    
-    select.form-control {
-      cursor: pointer;
-    }
-    
-    textarea.form-control {
-      resize: vertical;
-      min-height: 80px;
-    }
-    
-    /* Documents Section */
-    .documents-info {
-      background: #f8f9fa;
-      padding: 1.5rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-    }
-    
-    .document-item {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-bottom: 0.8rem;
-      font-size: 0.95rem;
-    }
-    
-    .document-item:last-child {
-      margin-bottom: 0;
-    }
-    
-    .doc-icon {
-      font-size: 1.2rem;
-    }
-    
-    .document-note {
-      background: #fff3cd;
-      color: #856404;
-      padding: 1rem;
-      border-radius: 8px;
-      border: 1px solid #ffeaa7;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-    
-    /* Checkbox */
-    .checkbox-container {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      cursor: pointer;
-      font-size: 0.95rem;
-    }
-    
-    .checkbox-container input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #2d8a3e;
-    }
-    
-    .terms-link {
-      color: #2d8a3e;
-      text-decoration: none;
-    }
-    
-    .terms-link:hover {
-      text-decoration: underline;
-    }
-    
-    /* Form Actions */
-    .form-actions {
-      text-align: center;
-      margin-top: 2rem;
-    }
-    
-    .submit-btn {
-      background: linear-gradient(135deg, #2d8a3e, #4caf50);
-      color: white;
-      border: none;
-      padding: 1rem 3rem;
-      border-radius: 50px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      min-width: 200px;
-    }
-    
-    .submit-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(45, 138, 62, 0.3);
-    }
-    
-    .submit-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    
-    /* Messages */
-    .success-message, .error-message {
-      margin-top: 2rem;
-      padding: 2rem;
-      border-radius: 12px;
-      text-align: center;
-    }
-    
-    .success-message {
-      background: #d4edda;
-      border: 1px solid #c3e6cb;
-      color: #155724;
-    }
-    
-    .error-message {
-      background: #f8d7da;
-      border: 1px solid #f5c6cb;
-      color: #721c24;
-    }
-    
-    .success-icon, .error-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-    
-    .login-info {
-      background: rgba(45, 138, 62, 0.1);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
-    
-    /* Login Link */
-    .login-link {
-      text-align: center;
-      padding: 2rem;
-      background: #f8f9fa;
-      border-top: 1px solid #eee;
-    }
-    
-    .login-link p {
-      margin: 0.5rem 0;
-      color: #666;
-    }
-    
-    .login-link a {
-      color: #2d8a3e;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    .login-link a:hover {
-      text-decoration: underline;
-    }
-    
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-      .register-container {
-        padding: 1rem;
-      }
-      
-      .register-card {
-        margin: 0;
-      }
-      
-      .header {
-        padding: 1.5rem;
-      }
-      
-      .header h1 {
-        font-size: 1.5rem;
-      }
-      
-      .register-form {
-        padding: 1.5rem;
-      }
-      
-      .form-row {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-      }
-      
-      .submit-btn {
-        width: 100%;
-        padding: 1rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .register-container {
-        padding: 0.5rem;
-      }
-      
-      .header {
-        padding: 1rem;
-      }
-      
-      .register-form {
-        padding: 1rem;
-      }
-      
-      .form-section h3 {
-        font-size: 1.1rem;
-      }
-    }
-  `]
+  `
 })
 export class RestaurantRegisterComponent {
   isSubmitting = false;

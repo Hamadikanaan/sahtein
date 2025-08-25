@@ -1,329 +1,256 @@
 // app/pages/auth/login-select/login-select.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-select',
   standalone: true,
   imports: [CommonModule, RouterModule],
+  styleUrls: ['./login-select.component.css'],
   template: `
     <div class="login-select-container">
-      <div class="selection-card">
-        <div class="header">
-          <h1>🍕 تسجيل الدخول</h1>
-          <p>اختر نوع الحساب للدخول</p>
+      <!-- Animated Background -->
+      <div class="bg-gradient"></div>
+      <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+      </div>
+      
+      <!-- Floating Icons -->
+      <div class="floating-icons">
+        <span class="float-icon icon-1">🍽️</span>
+        <span class="float-icon icon-2">🏪</span>
+        <span class="float-icon icon-3">👨‍💼</span>
+        <span class="float-icon icon-4">🥙</span>
+        <span class="float-icon icon-5">📊</span>
+      </div>
+
+      <div class="main-content">
+        <!-- Header Section -->
+        <div class="header-section">
+          <div class="logo-container">
+            <div class="logo-icon">
+              <span class="icon-text">صحتين</span>
+              <div class="logo-shine"></div>
+            </div>
+          </div>
+          <h1 class="main-title">مرحباً بك في صحتين</h1>
+          <p class="main-subtitle">اختر نوع حسابك لتسجيل الدخول</p>
         </div>
 
-        <div class="login-options">
-          <!-- Customer Login -->
-          <div class="login-option" routerLink="/login">
-            <div class="option-icon customer-icon">👤</div>
-            <div class="option-content">
-              <h3>دخول العملاء</h3>
-              <p>للعملاء الذين يريدون طلب الطعام</p>
-              <div class="login-features">
-                <span class="feature-tag">تصفح المطاعم</span>
-                <span class="feature-tag">طلب الطعام</span>
-              </div>
-            </div>
-            <div class="option-arrow">←</div>
+        <!-- Selection Card -->
+        <div class="selection-card">
+          <div class="card-glow"></div>
+          
+          <div class="card-header">
+            <h2>تسجيل الدخول</h2>
+            <div class="header-decoration"></div>
           </div>
 
-          <!-- Restaurant Login -->
-          <div class="login-option" routerLink="/restaurant-login">
-            <div class="option-icon restaurant-icon">🏪</div>
-            <div class="option-content">
-              <h3>دخول المطاعم</h3>
-              <p>لأصحاب المطاعم المسجلين</p>
-              <div class="login-features">
-                <span class="feature-tag">إدارة القائمة</span>
-                <span class="feature-tag">متابعة الطلبات</span>
+          <!-- Login Options -->
+          <div class="login-options">
+            <!-- Customer Login -->
+            <div class="login-option customer-option" routerLink="/login">
+              <div class="option-background"></div>
+              <div class="option-content">
+                <div class="option-icon customer-icon">
+                  <div class="icon-inner">👤</div>
+                  <div class="icon-glow"></div>
+                </div>
+                <div class="option-info">
+                  <h3>دخول العملاء</h3>
+                  <p>للعملاء الذين يريدون طلب الطعام</p>
+                  <div class="feature-tags">
+                    <span class="feature-tag">تصفح المطاعم</span>
+                    <span class="feature-tag">طلب الطعام</span>
+                    <span class="feature-tag">تتبع الطلبات</span>
+                  </div>
+                </div>
+                <div class="option-arrow">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12l-4.58 4.59z"/>
+                  </svg>
+                </div>
               </div>
             </div>
-            <div class="option-arrow">←</div>
+
+            <!-- Restaurant Login -->
+            <div class="login-option restaurant-option" routerLink="/restaurant-login">
+              <div class="option-background"></div>
+              <div class="option-content">
+                <div class="option-icon restaurant-icon">
+                  <div class="icon-inner">🏪</div>
+                  <div class="icon-glow"></div>
+                </div>
+                <div class="option-info">
+                  <h3>دخول المطاعم</h3>
+                  <p>لأصحاب المطاعم المسجلين</p>
+                  <div class="feature-tags">
+                    <span class="feature-tag">إدارة القائمة</span>
+                    <span class="feature-tag">متابعة الطلبات</span>
+                    <span class="feature-tag">الإحصائيات</span>
+                  </div>
+                </div>
+                <div class="option-arrow">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12l-4.58 4.59z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Admin Login -->
+            <div class="login-option admin-option" routerLink="/admin-login">
+              <div class="option-background"></div>
+              <div class="option-content">
+                <div class="option-icon admin-icon">
+                  <div class="icon-inner">👨‍💼</div>
+                  <div class="icon-glow"></div>
+                </div>
+                <div class="option-info">
+                  <h3>دخول الإدارة</h3>
+                  <p>للمشرفين والإداريين فقط</p>
+                  <div class="feature-tags">
+                    <span class="feature-tag">إدارة النظام</span>
+                    <span class="feature-tag">مراجعة الطلبات</span>
+                    <span class="feature-tag">التقارير</span>
+                  </div>
+                </div>
+                <div class="option-arrow">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12l-4.58 4.59z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Admin Login -->
-          <div class="login-option admin-option" routerLink="/admin-login">
-            <div class="option-icon admin-icon">👨‍💼</div>
-            <div class="option-content">
-              <h3>دخول الإدارة</h3>
-              <p>للمشرفين والإداريين</p>
-              <div class="login-features">
-                <span class="feature-tag">إدارة النظام</span>
-                <span class="feature-tag">مراجعة الطلبات</span>
+          <!-- Quick Demo Login -->
+          <div class="demo-section">
+            <h4>🚀 دخول سريع للتجربة</h4>
+            <div class="demo-cards">
+              <div class="demo-card customer-demo" (click)="quickLogin('customer')">
+                <div class="demo-icon">👤</div>
+                <div class="demo-content">
+                  <div class="demo-title">عميل تجريبي</div>
+                  <div class="demo-email">test@sahtein.com</div>
+                  <div class="demo-password">password123</div>
+                </div>
+                <div class="demo-action">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
               </div>
-            </div>
-            <div class="option-arrow">←</div>
-          </div>
-        </div>
 
-        <!-- Quick Login Cards -->
-        <div class="quick-login">
-          <h4>دخول سريع للتجربة:</h4>
-          <div class="demo-accounts">
-            <div class="demo-card" (click)="quickLogin('customer')">
-              <div class="demo-icon">👤</div>
-              <div class="demo-info">
-                <strong>عميل تجريبي</strong>
-                <small>test@sahtein.com</small>
+              <div class="demo-card restaurant-demo" (click)="quickLogin('restaurant')">
+                <div class="demo-icon">🏪</div>
+                <div class="demo-content">
+                  <div class="demo-title">مطعم تجريبي</div>
+                  <div class="demo-email">restaurant@sahtein.com</div>
+                  <div class="demo-password">restaurant123</div>
+                </div>
+                <div class="demo-action">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
               </div>
-            </div>
-            <div class="demo-card" (click)="quickLogin('restaurant')">
-              <div class="demo-icon">🏪</div>
-              <div class="demo-info">
-                <strong>مطعم تجريبي</strong>
-                <small>restaurant@sahtein.com</small>
+
+              <div class="demo-card admin-demo" (click)="quickLogin('admin')">
+                <div class="demo-icon">👨‍💼</div>
+                <div class="demo-content">
+                  <div class="demo-title">إدارة تجريبية</div>
+                  <div class="demo-email">admin@sahtein.com</div>
+                  <div class="demo-password">admin123</div>
+                </div>
+                <div class="demo-action">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="register-link">
-          <p>ليس لديك حساب؟ <a routerLink="/auth-select">إنشاء حساب جديد</a></p>
+          <!-- Register Link -->
+          <div class="register-section">
+            <div class="divider">
+              <span>ليس لديك حساب؟</span>
+            </div>
+            <a routerLink="/auth-select" class="register-btn">
+              <div class="register-content">
+                <span class="register-icon">✨</span>
+                <span>إنشاء حساب جديد</span>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  `,
-  styles: [`
-    .login-select-container {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #2d8a3e, #4caf50);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-    .selection-card {
-      background: white;
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-      width: 100%;
-      max-width: 650px;
-      text-align: center;
-    }
-    .header {
-      margin-bottom: 2.5rem;
-    }
-    .header h1 {
-      color: #2d8a3e;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    .header p {
-      color: #666;
-      font-size: 1.1rem;
-    }
-    .login-options {
-      display: grid;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .login-option {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 1.5rem;
-      align-items: center;
-      padding: 1.5rem;
-      border: 2px solid #e8f5e8;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-      text-align: right;
-    }
-    .login-option:hover {
-      border-color: #2d8a3e;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(45, 138, 62, 0.15);
-    }
-    .admin-option {
-      background: linear-gradient(45deg, #fff8e1, #ffffff);
-      border-color: #ff9800;
-    }
-    .admin-option:hover {
-      border-color: #f57c00;
-    }
-    .option-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-    }
-    .customer-icon {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-    }
-    .restaurant-icon {
-      background: linear-gradient(135deg, #f093fb, #f5576c);
-    }
-    .admin-icon {
-      background: linear-gradient(135deg, #ffa726, #ff9800);
-    }
-    .option-content h3 {
-      color: #2d8a3e;
-      margin-bottom: 0.3rem;
-      font-size: 1.2rem;
-    }
-    .option-content p {
-      color: #666;
-      margin-bottom: 0.8rem;
-      font-size: 0.9rem;
-    }
-    .login-features {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .feature-tag {
-      background: #e8f5e8;
-      color: #2d8a3e;
-      padding: 0.2rem 0.6rem;
-      border-radius: 10px;
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
-    .option-arrow {
-      font-size: 1.2rem;
-      color: #2d8a3e;
-      font-weight: bold;
-    }
-    
-    /* Quick Login Section */
-    .quick-login {
-      background: #f8f9fa;
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 2rem;
-    }
-    .quick-login h4 {
-      color: #2d8a3e;
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-    }
-    .demo-accounts {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    .demo-card {
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      border: 2px solid #e8f5e8;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    .demo-card:hover {
-      border-color: #2d8a3e;
-      transform: scale(1.02);
-    }
-    .demo-icon {
-      font-size: 1.5rem;
-    }
-    .demo-info {
-      text-align: right;
-      flex: 1;
-    }
-    .demo-info strong {
-      display: block;
-      color: #2d8a3e;
-      font-size: 0.9rem;
-    }
-    .demo-info small {
-      color: #666;
-      font-size: 0.8rem;
-    }
-    
-    .register-link {
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid #eee;
-    }
-    .register-link p {
-      color: #666;
-    }
-    .register-link a {
-      color: #2d8a3e;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .register-link a:hover {
-      text-decoration: underline;
-    }
-    
-    /* Mobile Optimization */
-    @media (max-width: 768px) {
-      .selection-card {
-        padding: 1.5rem;
-        margin: 1rem;
-      }
-      .header h1 {
-        font-size: 1.5rem;
-      }
-      .login-option {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        text-align: center;
-        padding: 1.2rem;
-      }
-      .option-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-        margin: 0 auto;
-      }
-      .option-arrow {
-        display: none;
-      }
-      .login-features {
-        justify-content: center;
-      }
-      .demo-accounts {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .login-select-container {
-        padding: 0.5rem;
-      }
-      .selection-card {
-        padding: 1rem;
-      }
-      .header h1 {
-        font-size: 1.3rem;
-      }
-      .login-option {
-        padding: 1rem;
-      }
-      .demo-card {
-        padding: 0.8rem;
-      }
-    }
-  `]
+  `
 })
 export class LoginSelectComponent {
   
-  constructor() {}
+  constructor(private router: Router) {}
 
-  quickLogin(type: 'customer' | 'restaurant') {
-    // TODO: Implement quick login functionality
-    if (type === 'customer') {
-      // Navigate to customer login with pre-filled credentials
-      alert('Quick Login: Customer - test@sahtein.com');
-    } else {
-      // Navigate to restaurant login with pre-filled credentials
-      alert('Quick Login: Restaurant - restaurant@sahtein.com');
+  quickLogin(type: 'customer' | 'restaurant' | 'admin') {
+    const demoCard = document.querySelector(`.${type}-demo`) as HTMLElement;
+    
+    if (demoCard) {
+      // Add loading state
+      demoCard.classList.add('loading');
+      
+      setTimeout(() => {
+        demoCard.classList.remove('loading');
+        demoCard.classList.add('success');
+        
+        // Navigate after success animation
+        setTimeout(() => {
+          switch(type) {
+            case 'customer':
+              this.router.navigate(['/login'], { 
+                queryParams: { 
+                  email: 'test@sahtein.com',
+                  password: 'password123',
+                  quick: 'true'
+                }
+              });
+              break;
+              
+            case 'restaurant':
+              this.router.navigate(['/restaurant-login'], { 
+                queryParams: { 
+                  email: 'restaurant@sahtein.com',
+                  password: 'restaurant123',
+                  quick: 'true'
+                }
+              });
+              break;
+              
+            case 'admin':
+              this.router.navigate(['/admin-login'], { 
+                queryParams: { 
+                  email: 'admin@sahtein.com',
+                  password: 'admin123',
+                  quick: 'true'
+                }
+              });
+              break;
+          }
+        }, 500);
+      }, 1000);
+    }
+  }
+
+  // Add method to handle keyboard navigation
+  onKeyDown(event: KeyboardEvent, action: () => void) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      action();
     }
   }
 }
